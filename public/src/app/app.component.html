@@ -1,0 +1,53 @@
+<div class="wrapper">
+    <div class="main">
+        <h1> All Cakes</h1>
+
+        <form (submit)="createCake()">
+            <label>
+               Baker Name:
+                <input type="text" name="newCake.baker" [(ngModel)]="newCake.baker">
+            </label>
+            <label>
+               Cake Image URL:
+                <input type="text" name="newCake.image" [(ngModel)]="newCake.image">
+            </label>
+            <input type="submit" value="Add Cake">
+        </form>
+        <div class="cakes" *ngFor="let cake of cakes">
+            <h3>Baker: {{ cake.baker }}</h3>
+            <h3>Rating: {{ ratingAvg(cake) | number:'1.0-1' }} / 5 Stars</h3>
+            <img src="{{ cake.image }}" width="250px" alt="">
+            <div class="reviews">
+                <h4>Reviews:</h4>
+                <p *ngIf="!cake.reviews[0]"> Currently no reviews :(</p>
+                <div *ngFor="let x of cake.reviews" class="review">
+                    <p>{{ x.comment }}</p>
+                    <p>{{ x.rating }} stars</p>
+                </div>
+            </div>
+            <form (submit)="addReview(cake._id)">
+                  <label>
+                      Rating:
+                      <select name="newReview.rating" [(ngModel)]="newReview.rating">
+                          <option value="5" > 5 Stars </option>
+                          <option value="4" > 4 Stars </option>
+                          <option value="3" > 3 Stars </option>
+                          <option value="2" > 2 Stars </option>
+                          <option value="1" > 1 Stars </option>
+                      </select>
+                  </label>
+                  <label>
+                      <textarea  name="newReview.comment" [(ngModel)]="newReview.comment" placeholder="Leave a Comment">
+                      </textarea>
+                  </label>
+                  <input type="submit" value="Rate">
+            </form>
+            <hr>
+        </div>
+    </div>
+    
+</div>
+
+
+
+<router-outlet></router-outlet>
